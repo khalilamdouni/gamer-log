@@ -12,7 +12,7 @@
 (defroutes app-routes
   (GET "/" [] (home))
   (GET "/load-data" [] (loader/load-data))
-  (GET "/get-data" [] (loader/get-data))
+  (GET "/get-data" [] (loader/get-data :p "" "" "DubaX"))
   (route/resources "/")
   (route/not-found "Not Found"))
 
