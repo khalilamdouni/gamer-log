@@ -2,7 +2,8 @@
   (:use compojure.core)
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
-            [clojure.tools.logging :as logger]))
+            [clojure.tools.logging :as logger]
+            [org.gamer.log.data.data-loader :as loader]))
 
 (defn home []
      (logger/info "-------------CALL::home------------ ")
@@ -10,6 +11,8 @@
 
 (defroutes app-routes
   (GET "/" [] (home))
+  (GET "/load-data" [] (loader/load-data))
+  (GET "/get-data" [] (loader/get-data))
   (route/resources "/")
   (route/not-found "Not Found"))
 
