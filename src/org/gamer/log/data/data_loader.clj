@@ -46,7 +46,7 @@
                                                   :server (.getName server-folder) 
                                                   :game (.getName game-folder) 
                                                   :player ((str/split line #":") 0) 
-                                                  :score ((str/split line #":") 1)])
+                                                  :score (read-string ((str/split line #":") 1))])
                       (if (not (contains? @players ((str/split line #":") 0))) (swap! players conj ((str/split line #":") 0)))) 
                  (with-open [r (reader round-file)](doall (line-seq r)))))
         )))
@@ -66,7 +66,8 @@
                  :p (build-work-plan rules (?- :data :server ?x :game ?y :player '??z :score ?s)),
                  :sg (build-work-plan rules (?- :data :server '??x :game '??y :player ?z :score ?s)),
                  :sp (build-work-plan rules (?- :data :server '??x :game ?y :player '??z :score ?s)),
-                 :gp (build-work-plan rules (?- :data :server ?x :game '??y :player '??z :score ?s))})
+                 :gp (build-work-plan rules (?- :data :server ?x :game '??y :player '??z :score ?s)),
+                 :all (build-work-plan rules (?- :data :server ?x :game ?y :player ?z :score ?s))})
   
   (def params {:sgp {'??x server, '??y game, '??z player},
                :s {'??x server},
@@ -74,7 +75,8 @@
                :p {'??z player},
                :sg {'??x server, '??y game},
                :sp {'??x server, '??z player},
-               :gp {'??y game, '??z player}})
+               :gp {'??y game, '??z player},
+               :all {}})
   
   (run-work-plan (request requests) @db (request params)))
 
