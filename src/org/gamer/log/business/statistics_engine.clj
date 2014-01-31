@@ -13,16 +13,17 @@
 
 ; Utility method used to prepare params for datalog operations
 (defn evaluate-operation [server game player]
-  (if (and (= server "-") (= game "-") (= player "-")) (:all) 
-    (if (and (= server "-") (= game "-")) (:p) 
-      (if (and (= server "-") (= player "-")) (:g) 
+  (if (and (= server "-") (= game "-") (= player "-")) :all 
+    (if (and (= server "-") (= game "-")) :p
+      (if (and (= server "-") (= player "-")) :g 
         (if (and (= game "-") (= player "-")) :s
-          (if (= server "-") (:gp) 
-            (if (= game "-") (:sp) 
-              (if (= player "-") (:sg) (:sgp)))))))))
+          (if (= server "-") :gp 
+            (if (= game "-") :sp 
+              (if (= player "-") :sg :sgp))))))))
 
 ; business method used to get average
 (defn score-avg [server game player]
+  
   (let [scores-list (map :score (loader/get-data (evaluate-operation server game player) server game player)) scores-count (count scores-list)]
                                          (str (float (/ (apply + scores-list) scores-count)))))
 

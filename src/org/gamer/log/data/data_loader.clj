@@ -51,8 +51,7 @@
                  (with-open [r (reader round-file)](doall (line-seq r)))))
         )))
   (logger/info "--------------load-data::END--------------")
-  (reset! db (apply database/add-tuples log-data @data-list))
-  "LOADED")
+  (reset! db (apply database/add-tuples log-data @data-list)))
 
 
 ; TO DO:

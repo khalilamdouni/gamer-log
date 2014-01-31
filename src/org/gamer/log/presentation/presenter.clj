@@ -3,18 +3,39 @@
   (:require  [org.gamer.log.data.data-loader :as loader]
     [org.gamer.log.business.statistics-engine :as stat]))
 
+; Vector containing static html menu
+(def menu [:div [:a {:href "/"} "Calculate Statistics"] 
+          [:span " | "] 
+          [:a {:href "top-ten"} "Top ten players"]
+          [:span " | "]
+          [:a {:href "load-data"} "Load data to memory"]])
+
+; Vector containing static html stat form
+(defn construct-stat-form []
+       [:form {:action "get-stats" :method "POST"} 
+              [:select {:name "server"} (conj [:option {:value "-"} "-"] (for [server (loader/get-servers)]
+                                                [:option {:value server} server]))]
+              [:select {:name "game"} (conj [:option {:value "-"} "-"] (for [game (loader/get-games)]
+                                      [:option {:value game} game]))]
+              [:select {:name "player"} (conj [:option {:value "-"} "-"] (for [player (loader/get-players)]
+                                        [:option {:value player} player]))]
+              [:input {:type "submit" :value "Calculate"} ]])
+
 ; View method used to construc the top-ten view
 (defn top-ten-view []
-   (html [:ul (for [player (stat/top-ten)]
-                [:li (str (player 0) ": " (player 1))])]))
+   (html [:div menu [:ul (for [player (stat/top-ten)]
+                        [:li (str (player 0) ": " (player 1))])]]))
+
+
 
 ; View method used to construc the stats form view
 (defn stat-console-view []
-  (html [:form {:action "get-stats" :method "POST"} 
-         [:select (for [server (loader/get-servers)]
-                    [:option {:value server} server])]
-         [:select (for [game (loader/get-games)]
-                    [:option {:value game} game])]
-         [:select (for [players (loader/get-players)]
-                    [:option {:value players} players])]
-         [:input {:type "submit" :value "Calculate"} "Calculate"]]))
+  (html [:div menu (construct-stat-form)]))
+
+; View method used to construc the stats form view
+(defn stat-results-view [server game player]
+  (html [:div menu (construct-stat-form) 
+         [:table {:border "2"} [:tr [:td {} "Average"] 
+                                               [:td {} "Standard deviation"]] 
+                     [:tr [:td {} (stat/score-avg server game player)] 
+                           [:td {} (stat/score-sd server game player)]]]]))

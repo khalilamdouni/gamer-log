@@ -7,17 +7,15 @@
             [org.gamer.log.business.statistics-engine :as stat]
             [org.gamer.log.presentation.presenter :as presenter]))
 
-(defn home []
-     (logger/info "-------------CALL::home------------ ")
-     "Gamer log menu!")
+(defn load-data-request []
+  (loader/load-data)
+  (presenter/stat-console-view))
 
 (defroutes app-routes
-  (GET "/" [] (home))
-  (GET "/load-data" [] (loader/load-data))
+  (GET "/" [] (presenter/stat-console-view))
+  (GET "/load-data" [] (load-data-request))
   (GET "/top-ten" [] (presenter/top-ten-view))
-  (GET "/stats" [] (presenter/stat-console-view))
-  (GET "/get-avg" [server game player] (stat/score-avg server game player))
-  (GET "/get-sd" [server game player] (stat/score-sd server game player))
+  (POST "/get-stats" [server game player] (presenter/stat-results-view server game player))
   (route/resources "/")
   (route/not-found "Not Found"))
 
