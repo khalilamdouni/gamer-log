@@ -38,17 +38,22 @@ To store data in memoy and facilitate querying them i used the clojure implement
 - it's a light implementation, (we are not obliged start a db server or install other features to use it), in our project we need just to struture datas and facilitate querying them.
 - it's based on the datalog querying language which is a strong querying language used in many fields.
 
+### Quartzite
+
+the scheduling system which is responsible for loading data from the file system to memory is implemented with [Quartzite][10] framework which is based on the famous cheduling framework Quartz.
+
+[10]:http://clojurequartz.info
 
 ## Running
 Steps to launch the application:
-1) Change the  application log path in the log4j.properties 
-2) Change the scores log path (the path in which the application will find the servers, games, players and scores)
-3) Launch the following command inside the app directory 
+- 1- Change the  application log path in the log4j.properties 
+- 2- Change the scores log path (the path in which the application will find the servers, games, players and scores)
+- 3- Launch the following command inside the app directory 
 
     lein ring server
 
 ## License
 
-Copyright © 2014 [Gamer-log][10]
+Copyright © 2014 [Gamer-log][11]
 
-[10]: https://github.com/khalilamdouni/gamer-log
+[11]: https://github.com/khalilamdouni/gamer-log
