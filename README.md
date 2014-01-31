@@ -9,7 +9,7 @@ The plaform is developed with [Clojure][1] language with the WEB API [Compojure]
 
 ## Namespaces 
 
-- The [data-loader][3] namespace (/src/org/gamer/log/data/data_loader.clj): this namespace is responsible for loading data from the file system, storing logs in memory and querrying the memory databse (using the [datalog][8] language)
+- The [data-loader][3] namespace (/src/org/gamer/log/data/data_loader.clj): this namespace is responsible for loading data from the file system, storing logs in memory and querrying the memory databse (using the [datalog][9] language)
 
 - The [statistics-engine][4] namespace (/src/org/gamer/log/business/statistics_engine.clj): this namespace provides statistics operations (top-ten players, average and standard deviation of a given player across games and machines, or of a given game across players and machines, etc)
 
@@ -19,18 +19,21 @@ The plaform is developed with [Clojure][1] language with the WEB API [Compojure]
 
 - The [config-manager][7] namespace (/src/org/gamer/log/config/config_manager.clj):  this namespace is responsible of loading properties from the gamer-log.properties (for the moment the only property we have is he path of scores logs)
 
+- The [data-schedular][8] namespace (/src/org/gamer/log/data/data_schedular.clj): this namespace is responsible for scheduling the data loader job.
+
 [3]:https://github.com/khalilamdouni/gamer-log/blob/master/src/org/gamer/log/data/data_loader.clj
 [4]:https://github.com/khalilamdouni/gamer-log/blob/master/src/org/gamer/log/business/statistics_engine.clj
 [5]:https://github.com/khalilamdouni/gamer-log/blob/master/src/org/gamer/log/presentation/presenter.clj
 [6]:https://github.com/khalilamdouni/gamer-log/blob/master/src/org/gamer/log/controller/handler.clj
 [7]:https://github.com/khalilamdouni/gamer-log/blob/master/src/org/gamer/log/config/config_manager.clj	
-[8]:http://en.wikipedia.org/wiki/Datalog
+[8]:https://github.com/khalilamdouni/gamer-log/blob/master/src/org/gamer/log/data/data_schedular.clj
+[9]:http://en.wikipedia.org/wiki/Datalog
 
 ## Prerequisites
 
-You will need [Leiningen][9] 1.7.0 or above installed.
+You will need [Leiningen][10] 1.7.0 or above installed.
 
-[9]: https://github.com/technomancy/leiningen
+[10]: https://github.com/technomancy/leiningen
 
 ## Frameworks 
 ### Datalog
@@ -40,9 +43,9 @@ To store data in memoy and facilitate querying them i used the clojure implement
 
 ### Quartzite
 
-the scheduling system which is responsible for loading data from the file system to memory is implemented with [Quartzite][10] framework which is based on the famous cheduling framework Quartz.
+the scheduling system which is responsible for loading data from the file system to memory is implemented with [Quartzite][11] framework which is based on the famous cheduling framework Quartz.
 
-[10]:http://clojurequartz.info
+[11]:http://clojurequartz.info
 
 ## Running
 Steps to launch the application:
@@ -54,6 +57,6 @@ Steps to launch the application:
 
 ## License
 
-Copyright © 2014 [Gamer-log][11]
+Copyright © 2014 [Gamer-log][12]
 
-[11]: https://github.com/khalilamdouni/gamer-log
+[12]: https://github.com/khalilamdouni/gamer-log

@@ -1,5 +1,5 @@
 (defproject compojure-test "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
+  :description "Gamer log project"
   :url "http://example.com/FIXME"
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/tools.logging "0.2.3"]
