@@ -54,7 +54,7 @@
   (reset! db (apply database/add-tuples log-data @data-list)))
 
 
-; TO DO:
+; Querying database using datalog language
 (defn get-data [request server game player]
   (def rules (rules-set (<- (:data :server ?x :game ?y :player ?z :score ?s) 
                             (:game-log :server ?x :game ?y :player ?z :score ?s))))

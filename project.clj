@@ -8,6 +8,7 @@
                  [compojure "1.1.6"]
                  [org.clojure/java.jdbc "0.0.6"]
                  [org.clojure/clojure-contrib "1.2.0"]
+                 [incanter "1.2.3-SNAPSHOT"]
                  [hiccup "1.0.5"]
                  [clojurewerkz/quartzite "1.1.0"]]
   :plugins [[lein-ring "0.8.10"]]

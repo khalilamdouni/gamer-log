@@ -34,8 +34,47 @@
 
 ; View method used to construc the stats form view
 (defn stat-results-view [server game player]
+  (let [avg (stat/score-avg server game player) sd (stat/score-sd server game player)]
   (html [:div menu (construct-stat-form) 
          [:table {:border "2"} [:tr [:td {} "Average"] 
                                                [:td {} "Standard deviation"]] 
-                     [:tr [:td {} (stat/score-avg server game player)] 
-                           [:td {} (stat/score-sd server game player)]]]]))
+                     [:tr [:td {} avg] 
+                           [:td {} sd]]]
+         [:img {:src (str "get-hist?avg=" avg "&sd=" sd)}]])))
+
+
+; View method used to construct player stats form view
+(defn stats-player-form []
+  )
+
+; View method used to construct player stats view
+(defn stats-player [player]
+  )
+
+; View method used to construct game stats form view
+(defn stats-game-form []
+  )
+
+; View method used to construct game stats view
+(defn stats-game [game]
+  )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

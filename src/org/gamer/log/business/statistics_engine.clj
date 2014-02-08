@@ -21,14 +21,24 @@
             (if (= game "-") :sp 
               (if (= player "-") :sg :sgp))))))))
 
-; business method used to get average
+; Business method used to get average
 (defn score-avg [server game player]
   
   (let [scores-list (map :score (loader/get-data (evaluate-operation server game player) server game player)) scores-count (count scores-list)]
                                          (str (float (/ (apply + scores-list) scores-count)))))
 
-; business method used to get standard deviation
+; Business method used to get standard deviation
 (defn score-sd [server game player]
   (let [scores-list (map :score (loader/get-data (evaluate-operation server game player) server game player)) scores-count (count scores-list) avg (read-string (score-avg server game player))]
     (str (math/sqrt (float (/ (apply + (map #(* (- avg %) (- avg %)) scores-list)) scores-count))))))
 
+; Business method used to calculate stats per player
+(defn scores-player [player]
+  (let [games (loader/get-games)]
+    (map #([% (score-avg "-" % player)]))))
+
+
+; Business method used to calculate stats per game
+(defn scores-game [game]
+  (let [players (loader/get-players)]
+    (map #([% (score-avg "-" game %)]))))
