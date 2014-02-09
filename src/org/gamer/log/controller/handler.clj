@@ -20,6 +20,18 @@
   (GET "/get-hist" [avg sd] {:status 200
                              :headers {"Content-Type" "image/png"}
                              :body (charts/gen-hist-png avg sd)})
+  (GET "/get-game-players-stat" [game] {:status 200
+                                        :headers {"Content-Type" "image/png"}
+                                        :body (charts/gen-game-players-bar-chart game)})
+  (GET "/get-player-games-stat" [player] {:status 200
+                                          :headers {"Content-Type" "image/png"}
+                                          :body (charts/gen-player-games-bar-chart player)})
+  (GET "/get-server-games-stat" [server] {:status 200
+                                          :headers {"Content-Type" "image/png"}
+                                          :body (charts/gen-server-games-bar-chart server)})
+  (GET "/get-game-servers-stat" [game] {:status 200
+                                        :headers {"Content-Type" "image/png"}
+                                        :body (charts/gen-game-servers-bar-chart game)})
   (route/resources "/")
   (route/not-found "Not Found"))
 
