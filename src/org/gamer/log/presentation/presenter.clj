@@ -51,33 +51,40 @@
                            [:td {} sd]]]
          [:img {:src (str "get-hist?avg=" avg "&sd=" sd)}]])))
 
-
 ; View method used to construct game over players form 
 (defn construct-game-players-form []
   [:form {:action "game-players-result" :method "POST"} 
-   [:select {:name "game"} (conj [:option {:value "-"} "-"] (for [game (loader/get-games)]
-                                                              [:option {:value game} game]))]
+   [:br]
+   [:span "Select the game: "]
+   [:select {:name "game"} (for [game (loader/get-games)]
+                             [:option {:value game} game])]
    [:input {:type "submit" :value "Statistics"}]])
 
 ; View method used to construct server over games form
 (defn construct-server-games-form []
   [:form {:action "server-games-result" :method "POST"} 
-   [:select {:name "server"} (conj [:option {:value "-"} "-"] (for [server (loader/get-servers)]
-                                                                [:option {:value server} server]))]
+   [:br]
+   [:span "Select the server: "]
+   [:select {:name "server"} (for [server (loader/get-servers)]
+                               [:option {:value server} server])]
    [:input {:type "submit" :value "Statistics"}]])
 
 ; View method used to construct player over games form
 (defn construct-player-games-form []
   [:form {:action "player-games-result" :method "POST"} 
-   [:select {:name "player"} (conj [:option {:value "-"} "-"] (for [player (loader/get-players)]
-                                                              [:option {:value player} player]))]
+   [:br]
+   [:span "Select the player: "]
+   [:select {:name "player"} (for [player (loader/get-players)]
+                               [:option {:value player} player])]
    [:input {:type "submit" :value "Statistics"}]])
 
 ; View method used to construct game over servers form
 (defn construct-game-servers-form []
   [:form {:action "game-servers-result" :method "POST"} 
-   [:select {:name "game"} (conj [:option {:value "-"} "-"] (for [game (loader/get-games)]
-                                                            [:option {:value game} game]))]
+   [:br]
+   [:span "Select the game: "]
+   [:select {:name "game"} (for [game (loader/get-games)]
+                             [:option {:value game} game])]
    [:input {:type "submit" :value "Statistics"}]])
 
 ; View method used to construct game over players form view

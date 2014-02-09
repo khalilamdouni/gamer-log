@@ -42,9 +42,10 @@
 ; Business method used to calculate stats per game
 (defn scores-game-over-players [game]
   (let [players (loader/get-players)]
-    (filter (fn [pitem] 
-              (> (pitem 1) 0)) (map (fn [player] 
-                                      [player (read-string (score-avg "-" game player))]) players))))
+    (take 10 (sort-by #(% 1) > (filter (fn [pitem] 
+                                   (> (pitem 1) 0)) (map (fn [player] 
+                                                           [player (read-string (score-avg "-" game player))]) players))))
+    ))
 
 ; Business method used to calculate stats per server
 (defn scores-server-over-games [server]

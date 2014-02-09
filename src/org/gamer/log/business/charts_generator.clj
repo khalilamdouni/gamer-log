@@ -37,8 +37,10 @@
         players (mapv (fn [player] (player 0)) game-results)
         scores  (mapv (fn [player] (player 1)) game-results)
         chart (bar-chart players scores
+                          :title (str "Top ten players for: " game)
                           :y-label "Scores"
-                          :x-label "Players")
+                          :x-label "Players"
+                          :vertical false)
         out-stream (ByteArrayOutputStream.)
         in-stream (do
                     (save chart out-stream)
@@ -52,8 +54,9 @@
         games (mapv (fn [game] (game 0)) player-results)
         scores  (mapv (fn [game] (game 1)) player-results)
         chart (bar-chart games scores
-                          :y-label "Scores"
-                          :x-label "Games")
+                         :title (str "All scores for player: " player)
+                         :y-label "Scores"
+                         :x-label "Games")
         out-stream (ByteArrayOutputStream.)
         in-stream (do
                     (save chart out-stream)
@@ -67,8 +70,9 @@
         games (mapv (fn [game] (game 0)) server-results)
         scores  (mapv (fn [game] (game 1)) server-results)
         chart (bar-chart games scores
-                          :y-label "Scores"
-                          :x-label "Games")
+                         :title (str "Average scores in the server: " server)
+                         :y-label "Scores"
+                         :x-label "Games")
         out-stream (ByteArrayOutputStream.)
         in-stream (do
                     (save chart out-stream)
@@ -83,8 +87,9 @@
         servers (mapv (fn [server] (server 0)) game-results)
         scores  (mapv (fn [server] (server 1)) game-results)
         chart (bar-chart servers scores
-                          :y-label "Scores"
-                          :x-label "Servers")
+                         :title (str "Average scores in all servers for: " game)
+                         :y-label "Scores"
+                         :x-label "Servers")
         out-stream (ByteArrayOutputStream.)
         in-stream (do
                     (save chart out-stream)
