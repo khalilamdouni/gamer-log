@@ -32,6 +32,14 @@
   (GET "/get-game-servers-stat" [game] {:status 200
                                         :headers {"Content-Type" "image/png"}
                                         :body (charts/gen-game-servers-bar-chart game)})
+  (GET "/game-players-form" [] (presenter/game-players-form-view))
+  (GET "/server-games-form" [] (presenter/server-games-form-view))
+  (GET "/player-games-form" [] (presenter/player-games-form-view))
+  (GET "/game-servers-form" [] (presenter/game-servers-form-view))
+  (POST "/game-players-result" [game] (presenter/game-players-result game))
+  (POST "/server-games-result" [server] (presenter/server-games-result server))
+  (POST "/player-games-result" [player] (presenter/player-games-result player))
+  (POST "/game-servers-result" [game] (presenter/game-servers-result game))
   (route/resources "/")
   (route/not-found "Not Found"))
 
