@@ -46,12 +46,15 @@
 ; View method used to construc the stats form view
 (defn stat-results-view [server game player]
   (let [avg (stat/score-avg server game player) sd (stat/score-sd server game player)]
-  (html [:div menu [:div {:style "float:left"}  (construct-stat-form) 
-         [:table {:border "2"} [:tr [:td {} "Average"] 
-                                               [:td {} "Standard deviation"]] 
-                     [:tr [:td {} avg] 
-                           [:td {} sd]]]]
-          [:div {:style "float:left;margin-left:10%"} [:img {:src (str "get-hist?avg=" avg "&sd=" sd) :border "1px" :style "border-color:firebrick"}]]])))
+    (html [:div menu [:div {:style "float:left"}  (construct-stat-form)  
+                      (if (and (= avg "0") (= sd "0")) [:b {:style "color:red"} "No data for this combination!"] 
+                        [:table {:border "2"} [:tr [:td {} "Average"] 
+                               [:td {} "Standard deviation"]] 
+                                      [:tr [:td {} avg] 
+                                       [:td {} sd]]])]
+           (if (not (and (= avg "0") (= sd "0"))) 
+             [:div {:style "float:left;margin-left:10%"} 
+              [:img {:src (str "get-hist?avg=" avg "&sd=" sd) :border "1px" :style "border-color:firebrick"}]])])))
 
 ; View method used to construct game over players form 
 (defn construct-game-players-form []
@@ -125,23 +128,3 @@
 (defn game-servers-result [game]
   (html [:div menu [:div {:style "float:left"} (construct-game-servers-form)]
          [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-game-servers-stat?game=" game) :border "1px" :style "border-color:firebrick"}]]]))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
