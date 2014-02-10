@@ -5,19 +5,21 @@
 
 ; Vector containing static html menu
 (def menu [:div [:a {:href "/"} "Calculate Statistics"] 
-          [:span " | "] 
+          [:span {:style "color:firebrick"} " | "] 
           [:a {:href "top-ten"} "Top ten players"]
-          [:span " | "]
+          [:span {:style "color:firebrick"} " | "] 
           [:a {:href "load-data"} "Load data to memory"]
-          [:span " | "]
+          [:span {:style "color:firebrick"} " | "] 
           [:a {:href "game-players-form"} "Stats game over players"]
-          [:span " | "]
+          [:span {:style "color:firebrick"} " | "] 
           [:a {:href "server-games-form"} "Stats server over games"]
-          [:span " | "]
+          [:span {:style "color:firebrick"} " | "] 
           [:a {:href "player-games-form"} "Stats player over games"]
-          [:span " | "]
-          [:a {:href "game-servers-form"} "Stats game over players"]
-          [:br]])
+          [:span {:style "color:firebrick"} " | "] 
+          [:a {:href "game-servers-form"} "Stats game over servers"]
+          [:br]
+          [:hr {:style "width:100%;color:firebrick;background-color:firebrick;height:3px;"}]
+          [:br][:br]])
 
 ; Vector containing static html stat form
 (defn construct-stat-form []
@@ -44,12 +46,12 @@
 ; View method used to construc the stats form view
 (defn stat-results-view [server game player]
   (let [avg (stat/score-avg server game player) sd (stat/score-sd server game player)]
-  (html [:div menu (construct-stat-form) 
+  (html [:div menu [:div {:style "float:left"}  (construct-stat-form) 
          [:table {:border "2"} [:tr [:td {} "Average"] 
                                                [:td {} "Standard deviation"]] 
                      [:tr [:td {} avg] 
-                           [:td {} sd]]]
-         [:img {:src (str "get-hist?avg=" avg "&sd=" sd)}]])))
+                           [:td {} sd]]]]
+          [:div {:style "float:left;margin-left:10%"} [:img {:src (str "get-hist?avg=" avg "&sd=" sd) :border "1px" :style "border-color:firebrick"}]]])))
 
 ; View method used to construct game over players form 
 (defn construct-game-players-form []
@@ -106,23 +108,23 @@
 
 ; View method used to construct game over players results view
 (defn game-players-result [game]
-    (html [:div menu (construct-game-players-form) 
-           [:img {:src (str "get-game-players-stat?game=" game)}]]))
+  (html [:div menu [:div {:style "float:left"} (construct-game-players-form)]
+         [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-game-players-stat?game=" game) :border "1px" :style "border-color:firebrick"}]]]))
 
 ; View method used to construct server over games results view
 (defn server-games-result [server]
-    (html [:div menu (construct-server-games-form)
-           [:img {:src (str "get-server-games-stat?server=" server)}]]))
+  (html [:div menu [:div {:style "float:left"} (construct-server-games-form)]
+         [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-server-games-stat?server=" server) :border "1px" :style "border-color:firebrick"}]]]))
 
 ; View method used to construct player over games results view
 (defn player-games-result [player]
-    (html [:div menu (construct-player-games-form)
-           [:img {:src (str "get-player-games-stat?player=" player)}]]))
+  (html [:div menu [:div {:style "float:left"} (construct-player-games-form)]
+         [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-player-games-stat?player=" player) :border "1px" :style "border-color:firebrick"}]]]))
 
 ; View method used to construct game over servers results view
 (defn game-servers-result [game]
-    (html [:div menu (construct-game-servers-form)
-           [:img {:src (str "get-game-servers-stat?game=" game)}]]))
+  (html [:div menu [:div {:style "float:left"} (construct-game-servers-form)]
+         [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-game-servers-stat?game=" game) :border "1px" :style "border-color:firebrick"}]]]))
 
 
 

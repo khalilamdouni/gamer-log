@@ -37,7 +37,7 @@
         players (mapv (fn [player] (player 0)) game-results)
         scores  (mapv (fn [player] (player 1)) game-results)
         chart (bar-chart players scores
-                          :title (str "Top ten players for: " game)
+                          :title (str "Top twenty players for: " game)
                           :y-label "Scores"
                           :x-label "Players"
                           :vertical false)

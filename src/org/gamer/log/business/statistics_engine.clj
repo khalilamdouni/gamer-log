@@ -29,8 +29,9 @@
 
 ; Business method used to get standard deviation
 (defn score-sd [server game player]
-  (let [scores-list (map :score (loader/get-data (evaluate-operation server game player) server game player)) scores-count (count scores-list) avg (read-string (score-avg server game player))]
-    (str (math/sqrt (float (/ (apply + (map #(* (- avg %) (- avg %)) scores-list)) scores-count))))))
+  (try (let [scores-list (map :score (loader/get-data (evaluate-operation server game player) server game player)) scores-count (count scores-list) avg (read-string (score-avg server game player))]
+         (str (math/sqrt (float (/ (apply + (map #(* (- avg %) (- avg %)) scores-list)) scores-count)))))
+    (catch Exception e "0")))
 
 ; Business method used to calculate stats per player
 (defn scores-player-over-games [player]
@@ -42,10 +43,9 @@
 ; Business method used to calculate stats per game
 (defn scores-game-over-players [game]
   (let [players (loader/get-players)]
-    (take 10 (sort-by #(% 1) > (filter (fn [pitem] 
+    (take 20 (sort-by #(% 1) > (filter (fn [pitem] 
                                    (> (pitem 1) 0)) (map (fn [player] 
-                                                           [player (read-string (score-avg "-" game player))]) players))))
-    ))
+                                                           [player (read-string (score-avg "-" game player))]) players))))))
 
 ; Business method used to calculate stats per server
 (defn scores-server-over-games [server]
