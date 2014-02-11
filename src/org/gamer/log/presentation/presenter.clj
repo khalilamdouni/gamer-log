@@ -32,29 +32,37 @@
                                         [:option {:value player} player]))]
               [:input {:type "submit" :value "Calculate"} ]])
 
+(defn no-data-view []
+  (html [:div menu [:b {:style "color:red"} "No data available, please check log files"]]))
+
 ; View method used to construc the top-ten view
 (defn top-ten-view []
-   (html [:div menu [:ul (for [player (stat/top-ten)]
+  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
+    (html [:div menu [:ul (for [player (stat/top-ten)]
                         [:li (str (player 0) ": " (player 1))])]]))
+)
 
 
 
 ; View method used to construc the stats form view
 (defn stat-console-view []
-  (html [:div menu (construct-stat-form)]))
+    (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
+      (html [:div menu (construct-stat-form)])))
 
 ; View method used to construc the stats form view
 (defn stat-results-view [server game player]
-  (let [avg (stat/score-avg server game player) sd (stat/score-sd server game player)]
-    (html [:div menu [:div {:style "float:left"}  (construct-stat-form)  
-                      (if (and (= avg "0") (= sd "0")) [:b {:style "color:red"} "No data for this combination!"] 
-                        [:table {:border "2"} [:tr [:td {} "Average"] 
-                               [:td {} "Standard deviation"]] 
-                                      [:tr [:td {} avg] 
-                                       [:td {} sd]]])]
-           (if (not (and (= avg "0") (= sd "0"))) 
-             [:div {:style "float:left;margin-left:10%"} 
-              [:img {:src (str "get-hist?avg=" avg "&sd=" sd) :border "1px" :style "border-color:firebrick"}]])])))
+  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
+    (let [avg (stat/score-avg server game player) sd (stat/score-sd server game player)]
+      (html [:div menu [:div {:style "float:left"}  (construct-stat-form)  
+                        (if (and (= avg "0") (= sd "0")) [:b {:style "color:red"} "No data for this combination!"] 
+                          [:table {:border "2"} [:tr [:td {} "Average"] 
+                                 [:td {} "Standard deviation"]] 
+                                        [:tr [:td {} avg] 
+                                         [:td {} sd]]])]
+             (if (not (and (= avg "0") (= sd "0"))) 
+               [:div {:style "float:left;margin-left:10%"} 
+                [:img {:src (str "get-hist?avg=" avg "&sd=" sd) :border "1px" :style "border-color:firebrick"}]])]))))
+
 
 ; View method used to construct game over players form 
 (defn construct-game-players-form []
@@ -94,37 +102,45 @@
 
 ; View method used to construct game over players form view
 (defn game-players-form-view []
-    (html [:div menu (construct-game-players-form)]))
+  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
+    (html [:div menu (construct-game-players-form)])))
 
 ; View method used to construct server over games form view
 (defn server-games-form-view []
-    (html [:div menu (construct-server-games-form)]))
+  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
+    (html [:div menu (construct-server-games-form)])))
 
 ; View method used to construct player over games form view
 (defn player-games-form-view []
-    (html [:div menu (construct-player-games-form)]))
+  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
+    (html [:div menu (construct-player-games-form)])))
 
 ; View method used to construct game over servers form view
 (defn game-servers-form-view []
-    (html [:div menu (construct-game-servers-form)]))
+  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
+    (html [:div menu (construct-game-servers-form)])))
 
 
 ; View method used to construct game over players results view
 (defn game-players-result [game]
-  (html [:div menu [:div {:style "float:left"} (construct-game-players-form)]
-         [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-game-players-stat?game=" game) :border "1px" :style "border-color:firebrick"}]]]))
+  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
+    (html [:div menu [:div {:style "float:left"} (construct-game-players-form)]
+           [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-game-players-stat?game=" game) :border "1px" :style "border-color:firebrick"}]]])))
 
 ; View method used to construct server over games results view
 (defn server-games-result [server]
-  (html [:div menu [:div {:style "float:left"} (construct-server-games-form)]
-         [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-server-games-stat?server=" server) :border "1px" :style "border-color:firebrick"}]]]))
+  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
+    (html [:div menu [:div {:style "float:left"} (construct-server-games-form)]
+           [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-server-games-stat?server=" server) :border "1px" :style "border-color:firebrick"}]]])))
 
 ; View method used to construct player over games results view
 (defn player-games-result [player]
-  (html [:div menu [:div {:style "float:left"} (construct-player-games-form)]
-         [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-player-games-stat?player=" player) :border "1px" :style "border-color:firebrick"}]]]))
+  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
+    (html [:div menu [:div {:style "float:left"} (construct-player-games-form)]
+           [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-player-games-stat?player=" player) :border "1px" :style "border-color:firebrick"}]]])))
 
 ; View method used to construct game over servers results view
 (defn game-servers-result [game]
-  (html [:div menu [:div {:style "float:left"} (construct-game-servers-form)]
-         [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-game-servers-stat?game=" game) :border "1px" :style "border-color:firebrick"}]]]))
+  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
+    (html [:div menu [:div {:style "float:left"} (construct-game-servers-form)]
+           [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-game-servers-stat?game=" game) :border "1px" :style "border-color:firebrick"}]]])))
