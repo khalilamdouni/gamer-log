@@ -32,14 +32,14 @@
   (GET "/get-game-servers-stat" [game] {:status 200
                                         :headers {"Content-Type" "image/png"}
                                         :body (charts/gen-game-servers-bar-chart game)})
-  (GET "/game-players-form" [] (presenter/game-players-form-view))
-  (GET "/server-games-form" [] (presenter/server-games-form-view))
-  (GET "/player-games-form" [] (presenter/player-games-form-view))
-  (GET "/game-servers-form" [] (presenter/game-servers-form-view))
-  (POST "/game-players-result" [game] (presenter/game-players-result game))
-  (POST "/server-games-result" [server] (presenter/server-games-result server))
-  (POST "/player-games-result" [player] (presenter/player-games-result player))
-  (POST "/game-servers-result" [game] (presenter/game-servers-result game))
+  (GET "/game-players-form" [] (presenter/get-form-view :game-players))
+  (GET "/server-games-form" [] (presenter/get-form-view :server-games))
+  (GET "/player-games-form" [] (presenter/get-form-view :player-games))
+  (GET "/game-servers-form" [] (presenter/get-form-view :game-servers))
+  (POST "/game-players-result" [game] (presenter/get-stat-result game :game-players))
+  (POST "/server-games-result" [server] (presenter/get-stat-result server :server-games))
+  (POST "/player-games-result" [player] (presenter/get-stat-result player :player-games))
+  (POST "/game-servers-result" [game] (presenter/get-stat-result game :game-servers))
   (route/resources "/")
   (route/not-found "Not Found"))
 

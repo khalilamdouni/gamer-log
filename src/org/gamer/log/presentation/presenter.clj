@@ -42,8 +42,6 @@
                         [:li (str (player 0) ": " (player 1))])]]))
 )
 
-
-
 ; View method used to construc the stats form view
 (defn stat-console-view []
     (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
@@ -64,83 +62,27 @@
                 [:img {:src (str "get-hist?avg=" avg "&sd=" sd) :border "1px" :style "border-color:firebrick"}]])]))))
 
 
-; View method used to construct game over players form 
-(defn construct-game-players-form []
-  [:form {:action "game-players-result" :method "POST"} 
+(def stat-requests {:game-players {:data-funtion loader/get-games, :item-name "game", :result-action "game-players-result", :chart-url "get-game-players-stat?game="},
+                    :server-games {:data-funtion loader/get-servers, :item-name "server", :result-action "server-games-result", :chart-url "get-server-games-stat?server="},
+                    :player-games {:data-funtion loader/get-players, :item-name "player", :result-action "player-games-result", :chart-url "get-player-games-stat?player="},
+                    :game-servers {:data-funtion loader/get-games, :item-name "game", :result-action "game-servers-result", :chart-url "get-game-servers-stat?game="}})
+
+; View method used to construct stats form 
+(defn construct-form [stat-request]
+  [:form {:action (:result-action (stat-request stat-requests)) :method "POST"} 
    [:br]
-   [:span "Select the game: "]
-   [:select {:name "game"} (for [game (loader/get-games)]
-                             [:option {:value game} game])]
+   [:span (str "Select the " (:item-name (stat-request stat-requests)) ": ")]
+   [:select {:name (:item-name (stat-request stat-requests))} (for [item ((:data-funtion (stat-request stat-requests)))]
+                                                                [:option {:value item} item])]
    [:input {:type "submit" :value "Statistics"}]])
 
-; View method used to construct server over games form
-(defn construct-server-games-form []
-  [:form {:action "server-games-result" :method "POST"} 
-   [:br]
-   [:span "Select the server: "]
-   [:select {:name "server"} (for [server (loader/get-servers)]
-                               [:option {:value server} server])]
-   [:input {:type "submit" :value "Statistics"}]])
-
-; View method used to construct player over games form
-(defn construct-player-games-form []
-  [:form {:action "player-games-result" :method "POST"} 
-   [:br]
-   [:span "Select the player: "]
-   [:select {:name "player"} (for [player (loader/get-players)]
-                               [:option {:value player} player])]
-   [:input {:type "submit" :value "Statistics"}]])
-
-; View method used to construct game over servers form
-(defn construct-game-servers-form []
-  [:form {:action "game-servers-result" :method "POST"} 
-   [:br]
-   [:span "Select the game: "]
-   [:select {:name "game"} (for [game (loader/get-games)]
-                             [:option {:value game} game])]
-   [:input {:type "submit" :value "Statistics"}]])
-
-; View method used to construct game over players form view
-(defn game-players-form-view []
+; View method used to return stats form view
+(defn get-form-view [stat-request]
   (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
-    (html [:div menu (construct-game-players-form)])))
+    (html [:div menu (construct-form stat-request)])))
 
-; View method used to construct server over games form view
-(defn server-games-form-view []
+; View method used to return stats results view
+(defn get-stat-result [item stat-request]
   (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
-    (html [:div menu (construct-server-games-form)])))
-
-; View method used to construct player over games form view
-(defn player-games-form-view []
-  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
-    (html [:div menu (construct-player-games-form)])))
-
-; View method used to construct game over servers form view
-(defn game-servers-form-view []
-  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
-    (html [:div menu (construct-game-servers-form)])))
-
-
-; View method used to construct game over players results view
-(defn game-players-result [game]
-  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
-    (html [:div menu [:div {:style "float:left"} (construct-game-players-form)]
-           [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-game-players-stat?game=" game) :border "1px" :style "border-color:firebrick"}]]])))
-
-; View method used to construct server over games results view
-(defn server-games-result [server]
-  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
-    (html [:div menu [:div {:style "float:left"} (construct-server-games-form)]
-           [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-server-games-stat?server=" server) :border "1px" :style "border-color:firebrick"}]]])))
-
-; View method used to construct player over games results view
-(defn player-games-result [player]
-  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
-    (html [:div menu [:div {:style "float:left"} (construct-player-games-form)]
-           [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-player-games-stat?player=" player) :border "1px" :style "border-color:firebrick"}]]])))
-
-; View method used to construct game over servers results view
-(defn game-servers-result [game]
-  (if (or (= (count (loader/get-servers)) 0) (= (count (loader/get-games)) 0) (= (count (loader/get-players)) 0)) (no-data-view)    
-    (html [:div menu [:div {:style "float:left"} (construct-game-servers-form)]
-           [:div {:style "float:left;margin-left:15%"} [:img {:src (str "get-game-servers-stat?game=" game) :border "1px" :style "border-color:firebrick"}]]])))
+    (html [:div menu [:div {:style "float:left"} (construct-form stat-request)]
+           [:div {:style "float:left;margin-left:15%"} [:img {:src (str (:chart-url (stat-request stat-requests)) item) :border "1px" :style "border-color:firebrick"}]]])))
